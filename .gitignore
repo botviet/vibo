@@ -3,5 +3,4 @@ classifier/__pycache__
 classifier/not_yet
 storage/prepare
 storage/tmp
-storage/model
 debug
