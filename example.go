@@ -10,7 +10,22 @@ import (
 func main() {
 
 	// transform()
-	spellCorrect()
+	// spellCorrect()
+	similarity()
+
+}
+
+func similarity() {
+	var dic nlp.Dictionary
+	dic.Load("./storage/big-text")
+
+	score, _ := dic.Similarity("tôi dắt chó đi dạo", "tôi đi dạo cùng chó")
+	fmt.Println(score)
+	// output: 0.883454233049763
+
+	score, _ = dic.Similarity("tôi dắt chó đi dạo", "tôi đi dạo cùng mèo")
+	fmt.Println(score)
+	// output: 0.510749824206131
 
 }
 

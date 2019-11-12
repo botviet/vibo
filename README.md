@@ -35,7 +35,6 @@ import (
     "fmt"
 
     "github.com/botviet/vibo/chatbot/nlp"
-    "github.com/botviet/vibo/utility"
 )
 
 func main() {
@@ -57,5 +56,28 @@ func main() {
             chán
             đi
     */
+}
+```
+
+### Text similarity
+
+```go
+import (
+    "fmt"
+
+    "github.com/botviet/vibo/chatbot/nlp"
+)
+
+func main() {
+    var dic nlp.Dictionary
+    dic.Load("./storage/big-text")
+
+    score, _ := dic.Similarity("tôi dắt chó đi dạo", "tôi đi dạo cùng chó")
+    fmt.Println(score)
+    // output: 0.883454233049763
+
+    score, _ = dic.Similarity("tôi dắt chó đi dạo", "tôi đi dạo cùng mèo")
+    fmt.Println(score)
+    // output: 0.510749824206131
 }
 ```
