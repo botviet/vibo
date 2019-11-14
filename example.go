@@ -16,16 +16,17 @@ func main() {
 }
 
 func similarity() {
+
 	var dic nlp.Dictionary
 	dic.Load("./storage/big-text")
 
-	score, _ := dic.Similarity("tôi dắt chó đi dạo", "tôi đi dạo cùng chó")
+	score, _ := dic.Similarity("tôi dắt chó đi dạo", "tôi đi dạo với con chó của mình")
 	fmt.Println(score)
-	// output: 0.883454233049763
+	// output: 0.7059293143803144
 
-	score, _ = dic.Similarity("tôi dắt chó đi dạo", "tôi đi dạo cùng mèo")
+	score, _ = dic.Similarity("mai mưa không", "ngày mai trời mưa không nhỉ")
 	fmt.Println(score)
-	// output: 0.510749824206131
+	// output: 0.640367228946234
 
 }
 

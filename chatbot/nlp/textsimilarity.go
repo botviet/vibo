@@ -23,8 +23,8 @@ func (dic *Dictionary) Similarity(a, b string) (float64, error) {
 	vectorA := make([]float64, n)
 	vectorB := make([]float64, n)
 	for k, v := range combinedTokens {
-		vectorA[k] = tfidf(v, tokensA, n, &dic.Bow)
-		vectorB[k] = tfidf(v, tokensB, n, &dic.Bow)
+		vectorA[k] = tfidf(v, tokensA, &dic.IDF)
+		vectorB[k] = tfidf(v, tokensB, &dic.IDF)
 	}
 
 	similarity, err := Cosine(vectorA, vectorB)
@@ -76,14 +76,13 @@ func count(key string, a []string) int {
 	return count
 }
 
-func tfidf(v string, tokens []string, n int, Bow *map[string]int) float64 {
-	if _, found := (*Bow)[v]; !found {
+func tfidf(v string, tokens []string, IDF *map[string]float64) float64 {
+	if _, found := (*IDF)[v]; !found {
 		return 0.0
 	}
 
-	tf := float64(count(v, tokens)) / float64((*Bow)[v])
-	idf := math.Log(float64(n) / float64((*Bow)[v]))
-	return tf * idf
+	tf := float64(count(v, tokens)) / float64(len(tokens))
+	return tf * (*IDF)[v]
 }
 
 func union(a, b []string) []string {

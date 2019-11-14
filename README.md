@@ -10,21 +10,26 @@ go get github.com/botviet/vibo
 
 ## Usage
 
-### Transform between UNICODE and VIQR
+### Text similarity
 
 ```go
 import (
     "fmt"
 
-    "github.com/botviet/vibo/utility"
+    "github.com/botviet/vibo/chatbot/nlp"
 )
 
 func main() {
+    var dic nlp.Dictionary
+    dic.Load("./storage/big-text")
 
-    fmt.Println(utility.Transform("nghiêng", utility.UNICODE, utility.VIQR))
-    // → nghie^ng
-    fmt.Println(utility.Transform("ngu+o+`i", utility.VIQR, utility.UNICODE))
-    // → người
+    score, _ := dic.Similarity("tôi dắt chó đi dạo", "tôi đi dạo với con chó của mình")
+    fmt.Println(score)
+    // output: 0.7059293143803144
+
+    score, _ = dic.Similarity("mai mưa không", "ngày mai trời mưa không nhỉ")
+    fmt.Println(score)
+    // output: 0.640367228946234
 }
 ```
 
@@ -59,25 +64,20 @@ func main() {
 }
 ```
 
-### Text similarity
+### Transform between UNICODE and VIQR
 
 ```go
 import (
     "fmt"
 
-    "github.com/botviet/vibo/chatbot/nlp"
+    "github.com/botviet/vibo/utility"
 )
 
 func main() {
-    var dic nlp.Dictionary
-    dic.Load("./storage/big-text")
 
-    score, _ := dic.Similarity("tôi dắt chó đi dạo", "tôi đi dạo cùng chó")
-    fmt.Println(score)
-    // output: 0.883454233049763
-
-    score, _ = dic.Similarity("tôi dắt chó đi dạo", "tôi đi dạo cùng mèo")
-    fmt.Println(score)
-    // output: 0.510749824206131
+    fmt.Println(utility.Transform("nghiêng", utility.UNICODE, utility.VIQR))
+    // → nghie^ng
+    fmt.Println(utility.Transform("ngu+o+`i", utility.VIQR, utility.UNICODE))
+    // → người
 }
 ```

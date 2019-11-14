@@ -9,28 +9,27 @@ import (
 
 // Dictionary .
 type Dictionary struct {
-	Bow          map[string]int // use for tf-idf + cosine -> similarity sentences
-	CoOccurrence CoOccurrence   // window Occurrence of words
+	IDF          map[string]float64 // use for tf-idf + cosine -> similarity sentences
+	CoOccurrence CoOccurrence       // window Occurrence of words
 }
 
-// Load init Dictionary
 // Load words from pathListWords, but not load file name is .uncensored
 func (dic *Dictionary) Load(pathBigText string) {
-	dic.loadBow(pathBigText)
+	dic.loadIDF(pathBigText)
 	dic.loadCoOccurrence(pathBigText)
 }
 
-// loadBow creates the document frequency mapping.
+// loadIDF load or creates the word's idf mapping.
 // pathCorpus required yml format
-func (dic *Dictionary) loadBow(pathText ...string) {
+func (dic *Dictionary) loadIDF(pathText ...string) {
 
-	err := utility.LoadModel(config.StorageModel+"/"+modelBow, &dic.Bow)
+	err := utility.LoadModel(config.StorageModel+"/"+modelIDF, &dic.IDF)
 	if err != nil {
 		// load big-text
 		documents := loadText(pathText...)
 
 		// load and build model file
-		dic.buildModelBow(documents)
+		dic.buildModelIDF(&documents)
 	}
 }
 
@@ -41,7 +40,7 @@ func (dic *Dictionary) loadCoOccurrence(pathText ...string) {
 		documents := loadText(pathText...)
 
 		// load and build model file
-		dic.buildModelCoOccurrence(documents)
+		dic.buildModelCoOccurrence(&documents)
 	}
 }
 

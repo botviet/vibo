@@ -1,6 +1,7 @@
 package nlp
 
 import (
+	"math"
 	"regexp"
 
 	"github.com/botviet/vibo/config"
@@ -10,49 +11,53 @@ import (
 )
 
 const (
-	modelBow          = "Bow"
+	modelIDF          = "IDF"
 	modelCoOccurrence = "CoOccurrence"
 )
 
-// loadBow creates the document frequency mapping.
-// pathCorpus required yml format
-func (dic *Dictionary) buildModelBow(documents []string) {
-	dic.Bow = make(map[string]int, 0)
+// IDF(game) = 1 + log(Total Number Of Documents / Number Of Documents with term `game` in it)
+func (dic *Dictionary) buildModelIDF(documents *[]string) {
+	// Total Number Of Documents
+	var totalDocument float64
+	// Number Of Documents with term
+	var NOD = make(map[string]float64)
 
-	var allTokens []string
+	for _, doc := range *documents {
+		totalDocument++
 
-	for _, doc := range documents {
-		allTokens = append(allTokens, utility.StringLower(splitLatin(doc))...)
-	}
-
-	for _, t := range allTokens {
-		if dic.Bow[t] == 0 {
-			dic.Bow[t] = 1
-		} else {
-			dic.Bow[t] = dic.Bow[t] + 1
+		ws := utility.StringLower(splitLatin(doc))
+		utility.RemoveDuplicates(&ws)
+		for _, w := range ws {
+			NOD[w]++
 		}
 	}
 
-	// remove word's frequency < 50
-	for word, frequency := range dic.Bow {
-		if frequency < 50 {
-			delete(dic.Bow, word)
+	// remove word's frequency < 100
+	for word, frequency := range NOD {
+		if frequency < 100 {
+			delete(NOD, word)
 		}
 	}
 
-	if err := utility.DumpModel(config.StorageModel+"/"+modelBow, dic.Bow); err != nil {
+	// calc IDF
+	for word := range NOD {
+		NOD[word] = 1 + math.Log(totalDocument/NOD[word])
+	}
+
+	dic.IDF = NOD
+	if err := utility.DumpModel(config.StorageModel+"/"+modelIDF, dic.IDF); err != nil {
 		log.Error(err)
 	}
 }
 
-func (dic *Dictionary) buildModelCoOccurrence(documents []string) {
+func (dic *Dictionary) buildModelCoOccurrence(documents *[]string) {
 
 	dic.CoOccurrence.init(3)
 
-	for _, doc := range documents {
+	for _, doc := range *documents {
 		ws := utility.StringFilter(
 			utility.StringLower(splitLatin(doc)), func(w string) bool {
-				_, has := dic.Bow[w]
+				_, has := dic.IDF[w]
 				return has
 			})
 
