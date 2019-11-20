@@ -20,14 +20,13 @@ func similarity() {
 	var dic nlp.Dictionary
 	dic.Load("./storage/big-text")
 
-	score, _ := dic.Similarity("tôi dắt chó đi dạo", "tôi đi dạo với con chó của mình")
-	fmt.Println(score)
-	// output: 0.7059293143803144
-
-	score, _ = dic.Similarity("mai mưa không", "ngày mai trời mưa không nhỉ")
+	score, _ := dic.Similarity("mai mưa không", "ngày mai trời mưa không nhỉ")
 	fmt.Println(score)
 	// output: 0.640367228946234
 
+	score, _ = dic.Similarity("tôi hàng ngày đều dắt chó đi dạo", "đi dạo với chó thú lắm")
+	fmt.Println(score)
+	// output: 0.5133125853160265
 }
 
 func spellCorrect() {
