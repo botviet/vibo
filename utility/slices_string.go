@@ -23,6 +23,11 @@ func StringIndexOf(element string, data []string) int {
 	return -1
 }
 
+// StringContains of slice
+func StringContains(element string, data []string) bool {
+	return StringIndexOf(element, data) != -1
+}
+
 // RemoveDuplicates .
 func RemoveDuplicates(elements *[]string) {
 	// Use map to record duplicates as we find them.

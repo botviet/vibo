@@ -11,14 +11,41 @@ func main() {
 
 	// transform()
 	// spellCorrect()
-	similarity()
+	// similarity()
+	tokenize()
+}
 
+func tokenize() {
+	var dic nlp.Dictionary
+	dic.DefaultLoad()
+
+	words, cant := dic.WordTokenize([]string{"ngày mai Hà nội có mưa không"})
+
+	for typ, w := range words {
+		fmt.Println(typ, w)
+	}
+
+	if len(cant) > 0 {
+
+		fmt.Println("Can't Readable")
+		for _, w := range cant {
+			fmt.Println(w)
+		}
+	}
+
+	/*
+		output:
+			ngày mai [date]
+			Hà nội [location_vietnam]
+			có mưa [weather]
+			không [word_common]
+	*/
 }
 
 func similarity() {
 
 	var dic nlp.Dictionary
-	dic.Load("./storage/big-text")
+	dic.DefaultLoad()
 
 	score, _ := dic.Similarity("mai mưa không", "ngày mai trời mưa không nhỉ")
 	fmt.Println(score)
@@ -31,7 +58,7 @@ func similarity() {
 
 func spellCorrect() {
 	var dic nlp.Dictionary
-	dic.Load("./storage/big-text")
+	dic.DefaultLoad()
 
 	fmt.Println(dic.Correction("lam", []string{"gì"}, []string{"đang"}))
 	fmt.Println(dic.Correction("an", []string{"cơm"}, []string{"đi"}))

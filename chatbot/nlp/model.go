@@ -2,7 +2,6 @@ package nlp
 
 import (
 	"math"
-	"regexp"
 
 	"github.com/botviet/vibo/config"
 	"github.com/botviet/vibo/utility"
@@ -67,8 +66,4 @@ func (dic *Dictionary) buildModelCoOccurrence(documents *[]string) {
 	if err := utility.DumpModel(config.StorageModel+"/"+modelCoOccurrence, dic.CoOccurrence); err != nil {
 		log.Error(err)
 	}
-}
-
-func splitLatin(s string) []string {
-	return regexp.MustCompile(`[\p{L}]+`).FindAllString(s, -1)
 }
