@@ -46,6 +46,24 @@ func RemoveDuplicates(elements *[]string) {
 	*elements = result
 }
 
+// StringRemoveEmpty .
+func StringRemoveEmpty(vs []string) []string {
+	return StringFilter(vs, func(s string) bool {
+		return s != ""
+	})
+}
+
+// StringClean .
+func StringClean(vs []string) []string {
+	vs = StringRemoveEmpty(vs)
+
+	for i := range vs {
+		vs[i] = strings.TrimSpace(vs[i])
+	}
+
+	return vs
+}
+
 // StringLower .
 func StringLower(vs []string) []string {
 	for i := range vs {
@@ -53,4 +71,25 @@ func StringLower(vs []string) []string {
 	}
 
 	return vs
+}
+
+// StringReplace .
+func StringReplace(vs []string, old, new string) []string {
+
+	replace := func(s string, old, new string) string {
+		ws := strings.Split(s, " ")
+		for i := range ws {
+			if ws[i] == old {
+				ws[i] = new
+			}
+		}
+		return strings.Join(ws, " ")
+	}
+
+	vsnew := make([]string, len(vs))
+	for i := range vs {
+		vsnew[i] = replace(vs[i], old, new)
+	}
+
+	return vsnew
 }

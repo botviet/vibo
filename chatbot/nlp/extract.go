@@ -4,8 +4,8 @@ import (
 	"regexp"
 	"strings"
 
-	"gitlab.com/chatbot.vibo/vibo/regex"
-	"gitlab.com/chatbot.vibo/vibo/utility"
+	"github.com/botviet/vibo/regex"
+	"github.com/botviet/vibo/utility"
 
 	"mvdan.cc/xurls"
 )

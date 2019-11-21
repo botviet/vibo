@@ -3,8 +3,8 @@ package nlp
 import (
 	"strings"
 
-	"gitlab.com/chatbot.vibo/vibo/frame"
-	"gitlab.com/chatbot.vibo/vibo/utility"
+	"github.com/botviet/vibo/frame"
+	"github.com/botviet/vibo/utility"
 )
 
 const (
