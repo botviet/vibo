@@ -75,7 +75,7 @@ func main() {
     var dic nlp.Dictionary
     dic.DefaultLoad()
 
-    // đang lam gì: làm → làm
+    // đang lam gì: lam → làm
     fmt.Println(dic.Correction("lam", []string{"gì"}, []string{"đang"}))
     // đi an cơm: an → ăn
     fmt.Println(dic.Correction("an", []string{"cơm"}, []string{"đi"}))
