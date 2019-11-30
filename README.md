@@ -23,18 +23,10 @@ func main() {
     var dic nlp.Dictionary
     dic.DefaultLoad()
 
-    words, cant := dic.WordTokenize([]string{"ngày mai Hà nội có mưa không"})
+    words, _ := dic.WordTokenize([]string{"ngày mai Hà nội có mưa không"})
 
     for typ, w := range words {
         fmt.Println(typ, w)
-    }
-
-    if len(cant) > 0 {
-
-        fmt.Println("Can't Readable")
-        for _, w := range cant {
-            fmt.Println(w)
-        }
     }
 
     /*
@@ -83,11 +75,17 @@ func main() {
     var dic nlp.Dictionary
     dic.DefaultLoad()
 
+    // đang lam gì: làm → làm
     fmt.Println(dic.Correction("lam", []string{"gì"}, []string{"đang"}))
+    // đi an cơm: an → ăn
     fmt.Println(dic.Correction("an", []string{"cơm"}, []string{"đi"}))
+    // bạn oi: oi → ơi
     fmt.Println(dic.Correction("oi", []string{"bạn"}, []string{}))
+    // đi 1nghienga ngả: 1nghienga → nghiêng
     fmt.Println(dic.Correction("1nghienga", []string{"ngả"}, []string{"đi"}))
+    // haizz chan quá đi: chan → chán
     fmt.Println(dic.Correction("chan", []string{"quá", "đi"}, []string{"haizz"}))
+    // ê di chơi không: di → đi
     fmt.Println(dic.Correction("di", []string{"chơi", "không"}, []string{"ê"}))
     /*
         output:
