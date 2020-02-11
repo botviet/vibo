@@ -1,6 +1,10 @@
 # vibo
 
-Project Chatbot cho tiếng việt
+Project Chatbot cho Tiếng Việt
+
+Chi tiết được miêu tả trong các bài viết trên trang
+
+https://botviet.asia
 
 ## Install
 
