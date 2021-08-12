@@ -5,6 +5,7 @@ Project Chatbot cho Tiếng Việt
 Chi tiết được miêu tả trong các bài viết trên trang
 
 https://botviet.asia
+https://cntt.tudien.info/
 
 ## Install
 
